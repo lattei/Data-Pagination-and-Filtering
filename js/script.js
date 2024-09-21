@@ -12,6 +12,7 @@ const itemsPerPage = 9;
 /*
 Declaring variables for Search Bar. SearchInput, SearchButton + HTML for Search Bar
 */
+const studentList = document.querySelector('.student-list');
 const header = document.querySelector('header');
 header.insertAdjacentHTML('beforeend', `<label for="search" class="student-search">
 <span>Search by name</span>
