@@ -7,13 +7,45 @@ For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
-
+//As per requirements, we will be showing 9 icons per page
 const itemsPerPage = 9;
-
 /*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
+Declaring variables for Search Bar. SearchInput, SearchButton + HTML for Search Bar
 */
+const header = document.querySelector('header');
+header.insertAdjacentHTML('beforeend', `<label for="search" class="student-search">
+<span>Search by name</span>
+<input id="search" placeholder="Search by name...">
+<button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+</label>`
+);
+const searchInput = document.querySelector("#search");
+const SearchButton = document.querySelector("button[type=button]");
+
+searchInput.addEventListener('keyup', (e) => {
+   
+   const filteredData = [];
+   const userInput = searchInput.value.toLowerCase();
+   for (let i = 0; i < data.length; i++) {
+      const studentName = `${data[i].name.first} ${data[i].name.last}`.toLowerCase();
+      if (studentName.includes(userInput)) {
+         filteredData.push(data[i]);
+      }
+   }
+   if (filteredData.length > 0) {
+      showPage(filteredData, 1);
+      addPagination(filteredData);
+   } else {
+      studentList.innerHTML = `<h3>No results were found!</h3>`;
+      linkedList.innerHTML = "";
+   }
+
+      
+   });
+/*
+showPage fn that creates a list of icons and appends them to the studentlist ul.
+*/
+
 function showPage(list, page) {
    const start = (page * itemsPerPage) - itemsPerPage;
    const end = (page * itemsPerPage) - 1;
@@ -41,12 +73,14 @@ function showPage(list, page) {
 
 
 /*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+As per requirements
+This function will create, then add or remove elements for pagination!
+
 */
+const linkedList = document.querySelector(".link-list");
 function addPagination(list) {
    const pageNumbers = Math.ceil(list.length / itemsPerPage);
-   const linkedList = document.querySelector(".link-list");
+   
 
    linkedList.innerHTML = "";
    for (let i = 1; i <= pageNumbers; i++) {
@@ -64,16 +98,20 @@ function addPagination(list) {
          const activeButton = linkedList.querySelector(".active");
          activeButton.className = "";
          clickedButton.classList.add("active");
-
          showPage(list, clickedButton.textContent);
 
       }
 
 
    })
-}
+};
 
 
 // Call functions
 showPage(data,1);
 addPagination(data);
+
+
+
+
+
